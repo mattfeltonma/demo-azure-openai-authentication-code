@@ -1,2 +1,5 @@
+## Standard files to ignore
+##
+venv
 .env
 .secrets

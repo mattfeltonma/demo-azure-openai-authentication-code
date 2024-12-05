@@ -1,10 +1,19 @@
-# Azure OpenAI Service - Python Example
-This repository contains very simple code to demonstrate using the Azure OpenAI Service using Python with Entra ID authentication. 
+# Azure OpenAI Authentication Code Samples
 
-It demonstrates three patterns:
+## Overview
+This repository contains code samples of different methods to authenticate to the Azure OpenAI Service using the [Python openai library](https://pypi.org/project/openai/), Python [langchain-openai library](https://pypi.org/project/langchain-openai/), and [Python requests library](https://pypi.org/project/requests/).
 
-1. Using the OpenAI Python SDK with a service principal with a client id and client secret.
-2. Using the OpenAI Python SDK with a user-assigned managed identity.
-3. Using the OpenAI REST API with a service principal with a client id and client secret.
+The samples assume the use of the [python-dotenv library](https://pypi.org/project/python-dotenv/) for storing sensitive variables.
 
-You can read more about the options for authentication within the Azure OpenAI Service at this [blog](https://journeyofthegeek.com/2023/04/02/authentication-in-azure-openai-service/).
+The following authentication examples are provided:
+
+1. [Service Principal with LangChain](/lanchain-openai-examples/service-principal/)
+2. [API Key with LangChain](/lanchain-openai-examples/api-key/)
+3. [Service Principal with OpenAI SDK](/openai-library-examples/service-principal/)
+4. [Managed Identity with OpenAI SDK](/openai-library-examples/managed-identity/)
+5. [API Key with OpenAI SDK](/openai-library-examples/api-key/)
+6. [Service Principal with REST API](/rest-api-examples/service-principal/)
+7. [API Key with REST API](/rest-api-examples/api-key/)
+
+In each example you will find a requirements.txt file with the required libraries and a sample environmental variables file that can be used with the python-dotenv library. You will need to rename it from .env-sample to .env.
+

@@ -1,7 +1,7 @@
-# Azure OpenAI Authentication Code Samples
+# Microsoft Foundry Authentication Code Samples
 
 ## Overview
-This repository contains code samples of different methods to authenticate to the Azure OpenAI Service using the [Python openai library](https://pypi.org/project/openai/) with both the legacy API and the Azure OpenAI v1 API, Python [Azure AI Inference library](https://pypi.org/project/azure-ai-inference/), Python [langchain-openai library](https://pypi.org/project/langchain-openai/), and [Python requests library](https://pypi.org/project/requests/).
+This repository contains code samples of different methods to authenticate to the Microsoft Foundry (and Azure OpenAI Service and Azure AI Service) using the [Python openai library](https://pypi.org/project/openai/) with both the legacy API and the Azure OpenAI v1 API, Python [Azure AI Inference library](https://pypi.org/project/azure-ai-inference/), Python [langchain-openai library](https://pypi.org/project/langchain-openai/), and [Python requests library](https://pypi.org/project/requests/).
 
 The samples assume the use of the [python-dotenv library](https://pypi.org/project/python-dotenv/) for storing sensitive variables.
 

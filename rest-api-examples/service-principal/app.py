@@ -6,9 +6,13 @@ import requests
 from msal import ConfidentialClientApplication
 from dotenv import load_dotenv
 
-## This function sets up logging
+## This is my shitty canned logging function
 ##
 def configure_logging(level="ERROR"):
+    """This function sets up logging
+        Args:
+            level (str, optional): The logging level as a string. Defaults to "ERROR".
+    """
     try:
         ## Convert the level string to uppercase so it matches what the logging library expects
         logging_level = getattr(logging, level.upper(), None)
@@ -30,6 +34,15 @@ def configure_logging(level="ERROR"):
 ## This function obtains an access token from Entra ID using a service principal with a client id and client secret
 ##
 def authenticate_with_service_principal(client_id, client_credential, tenant_name, scopes):
+    """This function obtains an access token from Entra ID using a service principal with a client id and client secret
+        Args:
+            client_id (str): The client id of the service principal
+            client_credential (str): The client secret of the service principal
+            tenant_name (str): The tenant id of the Entra ID tenant
+            scopes (list): The scopes for which the access token is requested
+        Returns:
+            token: An access token that can be used to authenticate requests to Azure OpenAI
+    """
     try: 
         logging.info('Attempting to obtain an access token...')
         
@@ -85,7 +98,7 @@ def main():
             'Authorization': 'Bearer ' + token
         }
         response = requests.post(
-            url = f"{os.getenv("AZURE_OPENAI_ENDPOINT")}openai/deployments/{os.getenv("DEPLOYMENT_NAME")}/chat/completions?api-version={os.getenv("OPENAI_API_VERSION")}",
+            url = f"{os.getenv("AZURE_OPENAI_ENDPOINT")}/openai/deployments/{os.getenv("DEPLOYMENT_NAME")}/chat/completions?api-version={os.getenv("OPENAI_API_VERSION")}",
             headers = headers,
             json = {
                 "messages": [

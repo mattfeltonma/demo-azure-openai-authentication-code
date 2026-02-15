@@ -1,8 +1,7 @@
 import logging
 import sys
 import os
-import json
-import requests
+from openai import OpenAI
 from dotenv import load_dotenv
 
 ## This is my shitty canned logging function
@@ -29,44 +28,48 @@ def configure_logging(level="ERROR"):
     except Exception as e:
         print(f"Failed to set up logging: {e}", file=sys.stderr)
         sys.exit(1)
-   
+        
 def main():
-
     ## Setup logging
     ##
-    configure_logging("ERROR")
+    configure_logging("DEBUG")
 
     ## Use dotenv library to load environmental variables from .env file.
-    ## The variables loaded include AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, AZURE_TENANT_ID
-    ## DEPLOYMENT_NAME, OPENAI_API_VERSION, and AZURE_OPENAI_ENDPOINT
+    ## The variables loaded include FOUNDRY_API_KEY, FOUNDRY_ENDPOINT, and 
+    ## DEPLOYMENT_NAME
     try:
         load_dotenv('.env')
     except Exception as e:
         logging.error('Failed to load environmental variables: ', exc_info=True)
         sys.exit(1)
-        
-    try:
-        headers = {
-            'Content-Type': 'application/json',
-            'api-key': os.getenv("AZURE_OPENAI_API_KEY")
-        }
-        response = requests.post(
-            url = f"{os.getenv("AZURE_OPENAI_ENDPOINT")}/openai/deployments/{os.getenv("DEPLOYMENT_NAME")}/chat/completions?api-version={os.getenv("OPENAI_API_VERSION")}",
-            headers = headers,
-            json = {
-                "messages": [
-                    {
-                        "role": "user",
-                        "content": "Tell me an interesting fact"
-                    }
-                ],
-                "max_tokens": 100
-            },
-        )
-        print(json.loads(response.text)['choices'][0]['message']['content'])
-    except:
-        logging.error('Failed to inference: ', exc_info=True)
 
+    ## Perform a chat completion using Azure OpenAI v1 API
+    ##
+    try:
+        client = OpenAI(
+            base_url = f"{os.getenv('FOUNDRY_ENDPOINT')}/openai/v1",
+            api_key=os.getenv('FOUNDRY_API_KEY')
+        )
+        response = client.chat.completions.create(
+            model=os.getenv('DEPLOYMENT_NAME'),
+            messages=[
+                {
+                    "role":"system",
+                    "content":"You are a helpful assistant that provides interesting facts."
+                },
+                {
+                    "role": "user",
+                   "content": "Tell me an interesting fact"
+                }
+            ],
+            max_tokens=100
+        )
+        print(response.choices[0].message.content)
+    
+    ## Use the responses API
+
+    except:
+        logging.error('Failed chat completion: ', exc_info=True)
 
 if __name__ == "__main__":
     main()

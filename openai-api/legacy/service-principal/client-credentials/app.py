@@ -5,9 +5,13 @@ from azure.identity import DefaultAzureCredential, get_bearer_token_provider
 from openai import AzureOpenAI
 from dotenv import load_dotenv
 
-## This function sets up logging
+## This is my shitty canned logging function
 ##
 def configure_logging(level="ERROR"):
+    """This function sets up logging
+        Args:
+            level (str, optional): The logging level as a string. Defaults to "ERROR".
+    """
     try:
         ## Convert the level string to uppercase so it matches what the logging library expects
         logging_level = getattr(logging, level.upper(), None)
@@ -29,6 +33,12 @@ def configure_logging(level="ERROR"):
 ## This function obtains an access token from Entra ID using a service principal with a client id and client secret
 ##
 def authenticate_with_service_principal(scope):
+    """This function obtains an access token from Entra ID using a service principal with a client id and client secret
+        Args:
+            scope (str): The scope for which the access token is requested
+        Returns:
+            token_provider: A token provider that can be used to obtain access tokens for the specified scope
+    """
     try:
         token_provider = get_bearer_token_provider(
             DefaultAzureCredential(),
@@ -69,11 +79,15 @@ def main():
             model=os.getenv('DEPLOYMENT_NAME'),
             messages=[
                 {
+                    "role":"system",
+                    "content":"You are a helpful assistant that provides interesting facts."
+                },
+                {
                     "role": "user",
                    "content": "Tell me an interesting fact"
                 }
             ],
-            max_tokens=100
+            max_tokens=32768
         )
         print(response.choices[0].message.content)
         

@@ -65,8 +65,7 @@ def main():
             max_tokens=100
         )
         print(response.choices[0].message.content)
-    
-    ## Use the responses API
+
 
     except:
         logging.error('Failed chat completion: ', exc_info=True)

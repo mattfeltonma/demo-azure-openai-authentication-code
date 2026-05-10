@@ -74,7 +74,7 @@ def main():
 
     ## Use dotenv library to load environmental variables from .env file.
     ## The variables loaded include AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, AZURE_TENANT_ID
-    ## DEPLOYMENT_NAME, OPENAI_API_VERSION, and AZURE_OPENAI_ENDPOINT
+    ## DEPLOYMENT_NAME, and FOUNDRY_ENDPOINT
     try:
         load_dotenv('.env')
     except Exception as e:
@@ -88,7 +88,7 @@ def main():
         client_credential = os.getenv('AZURE_CLIENT_SECRET'),
         tenant_name = os.getenv('AZURE_TENANT_ID'),
         scopes=[
-            "https://cognitiveservices.azure.com/.default"
+            "https://ai.azure.com/.default"
         ]
     )
     
@@ -98,7 +98,7 @@ def main():
             'Authorization': 'Bearer ' + token
         }
         response = requests.post(
-            url = f"{os.getenv("AZURE_OPENAI_ENDPOINT")}/openai/deployments/{os.getenv("DEPLOYMENT_NAME")}/chat/completions?api-version={os.getenv("OPENAI_API_VERSION")}",
+            url = f"{os.getenv('FOUNDRY_ENDPOINT')}/openai/v1/chat/completions",
             headers = headers,
             json = {
                 "messages": [

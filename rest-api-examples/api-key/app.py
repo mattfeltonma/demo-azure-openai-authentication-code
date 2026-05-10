@@ -37,8 +37,7 @@ def main():
     configure_logging("ERROR")
 
     ## Use dotenv library to load environmental variables from .env file.
-    ## The variables loaded include AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, AZURE_TENANT_ID
-    ## DEPLOYMENT_NAME, OPENAI_API_VERSION, and AZURE_OPENAI_ENDPOINT
+    ## The variables loaded include FOUNDRY_API_KEY, DEPLOYMENT_NAME, and FOUNDRY_ENDPOINT
     try:
         load_dotenv('.env')
     except Exception as e:
@@ -48,12 +47,13 @@ def main():
     try:
         headers = {
             'Content-Type': 'application/json',
-            'api-key': os.getenv("AZURE_OPENAI_API_KEY")
+            'api-key': os.getenv("FOUNDRY_API_KEY")
         }
         response = requests.post(
-            url = f"{os.getenv("AZURE_OPENAI_ENDPOINT")}/openai/deployments/{os.getenv("DEPLOYMENT_NAME")}/chat/completions?api-version={os.getenv("OPENAI_API_VERSION")}",
+            url = f"{os.getenv('FOUNDRY_ENDPOINT')}/openai/v1/chat/completions",
             headers = headers,
             json = {
+                "model": os.getenv('DEPLOYMENT_NAME'),
                 "messages": [
                     {
                         "role": "user",

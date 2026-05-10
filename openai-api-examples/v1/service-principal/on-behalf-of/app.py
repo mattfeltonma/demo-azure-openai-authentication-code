@@ -100,7 +100,7 @@ def main():
 
     ## Use dotenv library to load environmental variables from .env file.
     ## The variables loaded include AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, AZURE_TENANT_ID
-    ## DEPLOYMENT_NAME, OPENAI_API_VERSION, and AZURE_OPENAI_ENDPOINT
+    ## DEPLOYMENT_NAME, and FOUNDRY_ENDPOINT
     try:
         load_dotenv('.env')
     except Exception as e:
